@@ -1,0 +1,30 @@
+monitoringNamespace: kuberlab
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 1Gi
+  gpu: 1
+  limits:
+    cpu: 1000m
+    memory: 32Gi
+  pods:
+    ps: 0
+    worker: 0
+
+nfs:
+  server: 192.168.1.55
+  path: /kuberlab
+
+jupyter:
+  image: kuberlab/mlboard-jupyter:latest
+  useGpu: true
+  requests:
+    cpu: 1000m
+    memory: 2Gi
+  limits:
+    cpu: 8000m
+    memory: 32Gi
+
+tensorboard:
+  image: lsheiba/tensorflow-ls-devel

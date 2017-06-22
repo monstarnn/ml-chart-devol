@@ -1,0 +1,8 @@
+name: Devol repo
+version: 1.0.0
+type: mlapp
+description: Devol, but from git
+keywords:
+- devol
+- tensorflow
+engine: gotpl

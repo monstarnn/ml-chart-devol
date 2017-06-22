@@ -1,0 +1,56 @@
+Cmd: demo.py
+ExecutionDir: /src-nfs
+Images:
+  BaseImage: tensorflow/tensorflow
+  GpuImage: kuberlab/gpu-monitoring:latest
+  PSImage: tensorflow/tensorflow
+MonitoringNamespace: {{ .monitoringNamespace }}
+PythonPackages:
+- keras
+- tqdm
+Requests:
+  CPU: {{ .resources.requests.cpu }}
+  CPULimit: {{ .resources.limits.cpu }}
+  GPU: {{ .resources.GPU }}
+  Memory: {{ .resources.requests.memory }}
+  MemoryLimit: {{ .resources.limits.memory }}
+  PsPods: {{ .resources.pods.ps }}
+  WorkerPods: {{ .resources.pods.worker }}
+Jupyter:
+  CPU: {{ .jupyter.requests.cpu }}
+  CPULimit: {{ .jupyter.limits.cpu }}
+  Memory: {{ .jupyter.requests.memory }}
+  MemoryLimit: {{ .jupyter.limits.memory }}
+  Image: {{ .jupyter.image }}
+  UseGPU: {{ .jupyter.useGpu }}
+Tensorboard:
+  Image: {{ .tensorboard.image }}
+Volumes:
+- name: output
+  isTrainLogDir: true
+  mountPath: /training
+  subPath: training
+  nfs:
+    server: {{ .nfs.server }}
+    path: {{ .nfs.path }}
+- name: github
+  mountPath: /src
+  gitRepo:
+    repository: https://github.com/lsheiba/devol
+- name: nfs
+  mountPath: /src-nfs
+  subPath: /devol
+  nfs:
+    server: {{ .nfs.server }}
+    path: {{ .nfs.path }}
+- name: lib
+  isLibDir: true
+  mountPath: /plib
+  subPath: lib
+  nfs:
+    server: {{ .nfs.server }}
+    path: {{ .nfs.path }}
+- name: githubtest
+  mountPath: /gittest
+  gitRepo:
+    repository: ""
